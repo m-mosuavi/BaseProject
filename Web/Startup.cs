@@ -15,6 +15,11 @@ using BaseProject.DataAccess.Data;
 using BaseProject.DataAccess.Repository.IRepository;
 using BulkyBook.DataAccess.Repository;
 using BaseProject.DataAccess.Initializer;
+using Microsoft.Extensions.Logging;
+using ElmahCore;
+using ElmahCore.Sql;
+using ElmahCore.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace Web
 {
@@ -41,7 +46,7 @@ namespace Web
             services.AddRazorPages();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IDbInitializer, DbInitializer>();
+          //  services.AddScoped<IDbInitializer, DbInitializer>();
 
             services.ConfigureApplicationCookie(options =>
             {
@@ -57,11 +62,15 @@ namespace Web
                 options.Cookie.IsEssential = true;
             });
 
-
+            services.AddElmah<SqlErrorLog>(options =>
+            {
+                options.ConnectionString = Configuration.GetConnectionString("DefaultConnection");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDbInitializer dbInitializer)
+        //public void Configure(IApplicationBuilder app, IWebHostEnvironment env//,IDbInitializer dbInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -83,13 +92,13 @@ namespace Web
             app.UseAuthorization();
             app.UseSession();
 
-            dbInitializer.Initialize();
-
+            //dbInitializer.Initialize();
+            app.UseElmah();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{area=Home}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

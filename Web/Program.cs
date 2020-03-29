@@ -17,8 +17,12 @@ namespace Web
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+            Host.CreateDefaultBuilder(args).ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddConsole();
+                logging.AddTraceSource("Information, ActivityTracing"); // Add Trace listener provider
+            }).ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
                 });

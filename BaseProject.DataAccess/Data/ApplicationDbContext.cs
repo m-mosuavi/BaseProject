@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace BaseProject.DataAccess.Data
 {
@@ -12,8 +14,7 @@ namespace BaseProject.DataAccess.Data
             : base(options)
         {
         }
-       
-       // public DbSet<Category> Categories { get; set; }
+        // public DbSet<Category> Categories { get; set; }
 
     }
 }

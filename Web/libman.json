@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "Chart.js@2.9.3",
+      "destination": "wwwroot/Chart.js/"
+    },
+    {
+      "library": "big.js@5.2.2",
+      "destination": "wwwroot/big.js/"
+    },
+    {
+      "library": "persian.js@0.4.0",
+      "destination": "wwwroot/persian.js/"
+    }
+  ]
+}
